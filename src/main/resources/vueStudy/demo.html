@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>vuedemo1</title>
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>hello {{name}}</h1>
+        <button @click.stop="showInfo">点我提示信息</button>
+        <a href="www.baidu.com" @click.prevent="showInfo">跳转</a>
+        <button @click.once="showInfo">点我提示信息（只弹出一次）</button>
+
+        <input type="text" placeholder="按回车提示输入" @keyup.shift="showinfo1">
+
+
+        <br>
+        姓：<input type="text" v-model="firstName">
+        <br>
+
+        名：<input type="text" v-model="lastName">
+        <br>
+
+        全名：<span>{{fullName}}</span>
+
+        <br>
+        <h2>今天天气{{info}}</h2>
+        <button @click="ishot=!ishot">切换天气</button>
+    </div>
+
+<script type="text/javascript">
+    Vue.config.productionTip=false
+
+   const vm=new Vue({
+        el:"#root",
+        data:{
+            name:"眷恋嘉哥",
+            firstName:"张",
+            lastName:"三",
+            ishot:true
+
+        },
+       computed:{
+         // fullName:{
+         //     //当有人读取fullName时，get就会被调用，且返回值作为fullName的值
+         //     //get调用时机：1初次读取fullName时。2所依赖的数据发生变化时/
+         //     //只读不改可以使用简写
+         //     get()
+         //     {
+         //         return this.firstName+'-'+this.lastName
+         //     },
+         //
+         //     //set什么时候调用：当fullName数据被修改的时候
+         //     set(v)
+         //     {
+         //         console.log('set',v)
+         //         this.firstName=v.split('-')[0]
+         //         this.lastName=v.split('-')[1]
+         //     }
+         // }
+           fullName(){
+               return this.firstName+'-'+this.lastName
+           },
+           info(){
+               return this.ishot ? '炎热' : '凉爽'
+           }
+       },
+       methods:{
+            showInfo(event){
+
+                console.log(event.target.innerText)
+                console.log(this==vm)
+                alert("同学你好！");
+            },
+            showinfo1(e)
+            {
+                console.log(e.key)
+                console.log(e.keyCode)
+                alert(e.target.value)
+            },
+           change(){
+                this.ishot=!this.ishot
+           }
+       }
+    })
+</script>
+</body>
+
+</html>
